@@ -1,6 +1,23 @@
 <script setup>
-    import {RouterView} from 'vue-router';
+    import {onMounted} from 'vue';
+    import {RouterView, useRouter} from 'vue-router';
+
+
+    const router = useRouter();
+
+    // onMounted(async () => {
+    //     try {
+    //         let response = await axios.get("/api/user");
+    //         response = await axios.get("/api/books");
+    //         books.value = response.data.data;
+    //     } catch (error) {
+    //         router.push("/login");
+    //     }
+    // })
+
 </script>
+
+
 
 <template>
     <div class="app-container">

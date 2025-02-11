@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import BookView from '../views/BookView.vue';
 import AddBookView from '../views/AddBookView.vue';
+import ReviewView from '../views/ReviewView.vue';
 import LoginView from '../views/LoginView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 
@@ -24,7 +25,11 @@ const router = createRouter({
             name: 'book',
             component: BookView,
         },
-
+        {
+            path: "/book/:id/review/:reviewId",
+            name: "review",
+            component: ReviewView,
+        },
         {
             path: "/login",
             name: 'login',
