@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
 
 const route = useRoute();
 const router = useRouter();
@@ -35,7 +34,7 @@ const updateReview = async () => {
     });
     router.push(`/book/${bookId}`);
   } catch {
-    error.value = 'Failed to update review.' . error;
+    error.value = 'Failed to update review.' + error;
   }
 };
 
