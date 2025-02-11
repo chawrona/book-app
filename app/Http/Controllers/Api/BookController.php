@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class BookController extends Controller
 
     public function index()
     {
-        return Book::all();
+        return BookResource::collection(Book::with(['user', 'reviews'])->get());
     }
 
 
@@ -26,22 +27,24 @@ class BookController extends Controller
             ])
         ]);
 
-        return $book;
+        return new BookResource($book);
     }
     public function show(Book $book)
     {
-        return $book;
+        return new BookResource($book);
     }
 
 
     public function update(Request $request, Book $book)
     {
-        return $book->update($request->validate([
+        $book->update($request->validate([
             'title' => 'somtimes|string|max:50',
             'author' => 'sometimes|string|max:50',
             'release_year' => 'integer',
             'description' => 'string|max:255'
         ]));
+
+        return new BookResource($book);
     }
 
     public function destroy(Book $book)

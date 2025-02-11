@@ -12,6 +12,8 @@ class Book extends Model
 
     use HasUuids;
 
+    protected $fillable = ['title', 'description', 'release_year', 'author'];
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
