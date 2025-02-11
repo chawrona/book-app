@@ -15,14 +15,14 @@ class ReviewController extends Controller
     {
         $reviews = $book->reviews()->latest();
 
-        return ReviewResource::collection($reviews->paginate(10));
+        return ReviewResource::collection($reviews);
     }
 
 
     public function store(Request $request, Book $book)
     {
 
-        $review = $book->review()->create([
+        $review = $book->reviews()->create([
             'user_id' => 1,
             ...$request->validate([
                 'review' => 'required|string|max:255',
@@ -49,7 +49,7 @@ class ReviewController extends Controller
     }
 
 
-    public function destroy(Review $review)
+    public function destroy(string $book, Review $review)
     {
         $review->delete();
         return response(status: 204);
