@@ -3,47 +3,51 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        return Book::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        $book = Book::create([
+            ...$request->validate([
+                'title' => 'required|string|max:50',
+                'author' => 'required|string|max:50',
+                'release_year' => 'integer',
+                'description' => 'string|max:255'
+            ])
+        ]);
+
+        return $book;
+    }
+    public function show(Book $book)
+    {
+        return $book;
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function update(Request $request, Book $book)
     {
-        //
+        return $book->update($request->validate([
+            'title' => 'somtimes|string|max:50',
+            'author' => 'sometimes|string|max:50',
+            'release_year' => 'integer',
+            'description' => 'string|max:255'
+        ]));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Book $book)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $book->delete();
+        return response(status: 204);
     }
 }
