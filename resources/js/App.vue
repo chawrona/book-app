@@ -3,17 +3,18 @@
     import {RouterView, useRouter} from 'vue-router';
 
 
+
+
     const router = useRouter();
 
-    // onMounted(async () => {
-    //     try {
-    //         let response = await axios.get("/api/user");
-    //         response = await axios.get("/api/books");
-    //         books.value = response.data.data;
-    //     } catch (error) {
-    //         router.push("/login");
-    //     }
-    // })
+    const logout = async () => {
+        try {
+            await axios.post('/api/logout');
+            router.push('/login');
+        } catch (error) {
+            console.error('Logout failed', error);
+        }
+        };
 
 </script>
 
@@ -23,7 +24,8 @@
     <div class="app-container">
         <h1>Book App</h1>
         <RouterLink :to="`/`">Home Page</RouterLink><br>
-        <RouterLink :to="`/book`">Add Book</RouterLink>
+        <RouterLink :to="`/book`">Add Book</RouterLink><br>
+        <button @click="logout">Logout</button>
         <RouterView />
     </div>
 </template>

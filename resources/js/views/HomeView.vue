@@ -17,17 +17,29 @@ const calculateAvg = (reviews) => {
 };
 
 
-const sortBooks = (criteria) => {
-  books.value.sort((a, b) => {
-    if (criteria === 'title') return a.title.localeCompare(b.title);
-    if (criteria === 'author') return a.author.localeCompare(b.author);
-    if (criteria === 'release_year') return a.release_year - b.release_year;
-    if (criteria === 'avg') {
-      const avgA = a.reviews && a.reviews.length ? a.reviews.reduce((s, r) => s + r.rate, 0) / a.reviews.length : 0;
-      const avgB = b.reviews && b.reviews.length ? b.reviews.reduce((s, r) => s + r.rate, 0) / b.reviews.length : 0;
-      return avgB - avgA;
-    }
-  });
+const selectedSort = ref('');
+
+const sortBooks = () => {
+  switch (selectedSort.value) {
+    case 'title':
+      books.value.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'author':
+      books.value.sort((a, b) => a.author.localeCompare(b.author));
+      break;
+    case 'release_year':
+      books.value.sort((a, b) => a.release_year - b.release_year);
+      break;
+    case 'avg':
+      books.value.sort((a, b) => {
+        const avgA = a.reviews ? a.reviews.reduce((acc, review) => acc + review.rate, 0) / a.reviews.length : 0;
+        const avgB = b.reviews ? b.reviews.reduce((acc, review) => acc + review.rate, 0) / b.reviews.length : 0;
+        return avgA - avgB;
+      });
+      break;
+    default:
+      break;
+  }
 };
 
 onMounted(async () => {
@@ -45,12 +57,13 @@ onMounted(async () => {
 <template>
     <h2>Books</h2>
 
-    <div>
-        <button @click="sortBooks('title')">Sort by Title</button>
-        <button @click="sortBooks('author')">Sort by Author</button>
-        <button @click="sortBooks('release_year')">Sort by Year</button>
-        <button @click="sortBooks('avg')">Sort by Average Rating</button>
-    </div>
+    <select v-model="selectedSort" @change="sortBooks">
+  <option value="">Select sorting option</option>
+  <option value="title">Sort by Title</option>
+  <option value="author">Sort by Author</option>
+  <option value="release_year">Sort by Year</option>
+  <option value="avg">Sort by Average Rating</option>
+</select>
 
     <ul>
         <li v-for="book in books" :key="book.id">
