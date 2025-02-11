@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('books',BookController::class);
 
