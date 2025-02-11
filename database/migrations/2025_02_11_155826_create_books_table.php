@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,7 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+
+            $table->string('title');
+            $table->string('author');
+            $table->integer('release_year');
+            $table->string('description');
+
+            $table->foreignIdFor(User::class);
+
             $table->timestamps();
         });
     }
