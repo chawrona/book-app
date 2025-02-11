@@ -4,28 +4,37 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
+use App\Models\Book;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
 
-    public function index()
+    public function index(Book $book)
     {
-        return ReviewResource::collection(Review::all());
+        $reviews = $book->reviews()->latest();
+
+        return ReviewResource::collection($reviews->paginate(10));
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, Book $book)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'book_id' => 'required|exists:books,id',
-            'review' => 'required|string|max:255',
-            'rate' => 'required|integer|min:1|max:5',
+
+        $review = $book->review()->create([
+            'user_id' => 1,
+            ...$request->validate([
+                'review' => 'required|string|max:255',
+                'rate' => 'required|integer|min:1|max:5',
+            ])
         ]);
 
-        return Review::create($validated);
+        return new ReviewResource($review);
+    }
+
+    public function show(Book $book, Review $review)    {
+        return new ReviewResource($review);
     }
 
     public function update(Request $request, Review $review)

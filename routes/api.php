@@ -13,4 +13,4 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('books',BookController::class);
 
 Route::apiResource('books.reviews',ReviewController::class)
-    ->scoped(['review' => 'book']);
+    ->scoped();

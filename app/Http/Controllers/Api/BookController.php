@@ -12,7 +12,7 @@ class BookController extends Controller
 
     public function index()
     {
-        return BookResource::collection(Book::with(['user', 'reviews'])->get());
+        return BookResource::collection(Book::with('reviews')->get());
     }
 
 
@@ -27,24 +27,24 @@ class BookController extends Controller
             ])
         ]);
 
-        return new BookResource($book);
+        return new BookResource($book->load(['user', 'reviews']));
     }
     public function show(Book $book)
     {
-        return new BookResource($book);
+        return new BookResource($book->load(['reviews']));
     }
 
 
     public function update(Request $request, Book $book)
     {
         $book->update($request->validate([
-            'title' => 'somtimes|string|max:50',
+            'title' => 'sometimes|string|max:50',
             'author' => 'sometimes|string|max:50',
             'release_year' => 'integer',
             'description' => 'string|max:255'
         ]));
 
-        return new BookResource($book);
+        return new BookResource($book->load(['user', 'reviews']));
     }
 
     public function destroy(Book $book)

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Book extends Model
 {
 
-    use HasUuids;
     use HasFactory;
 
     protected $fillable = ['title', 'description', 'release_year', 'author'];
@@ -20,7 +19,7 @@ class Book extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function review(): HasMany {
+    public function reviews(): HasMany {
         return $this->hasMany(Review::class);
     }
 }
