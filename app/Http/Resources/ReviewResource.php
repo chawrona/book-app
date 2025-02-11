@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewResource extends JsonResource
 {
@@ -21,6 +22,7 @@ class ReviewResource extends JsonResource
         'review' => $this->review,
         'rate' => $this->rate,
         'created_at' => $this->created_at,
+        'is_owner'   => Auth::check() && Auth::id() === $this->user_id,
     ];
 }
 }

@@ -18,7 +18,7 @@ class ReviewController extends Controller
 
     public function index(Book $book)
     {
-        $reviews = $book->reviews()->latest();
+        $reviews = $book->reviews()->latest()->get();
 
         return ReviewResource::collection($reviews);
     }
@@ -44,7 +44,7 @@ class ReviewController extends Controller
 
     public function update(Request $request, Book $book, Review $review)
     {
-        $this->authorize('update-review', $review);
+        $this->authorize('update-review',  [$book, $review]);
 
         $validated = $request->validate([
             'review' => 'sometimes|string|max:255',
@@ -56,9 +56,9 @@ class ReviewController extends Controller
     }
 
 
-    public function destroy(string $book, Review $review)
+    public function destroy(Book $book, Review $review)
     {
-        $this->authorize('delete-review', $review);
+        $this->authorize('delete-review', [$book, $review]);
         $review->delete();
         return response(status: 204);
     }
