@@ -22,7 +22,12 @@ class ReviewResource extends JsonResource
         'review' => $this->review,
         'rate' => $this->rate,
         'created_at' => $this->created_at,
-        'is_owner'   => Auth::check() && Auth::id() === $this->user_id,
+       'is_owner' => tap(Auth::check() && Auth::id() === $this->user_id, function ($isOwner) {
+            logger()->info('Auth ID: ' . Auth::id());
+            logger()->info('User ID: ' . $this->user_id);
+            logger()->info('Is Owner: ' . ($isOwner ? 'true' : 'false'));
+        }),
+
     ];
 }
 }

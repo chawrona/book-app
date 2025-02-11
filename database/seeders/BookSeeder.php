@@ -16,7 +16,7 @@ class BookSeeder extends Seeder
     {
         $users = User::all();
 
-        for($i = 0; $i < 200; $i++) {
+        for($i = 0; $i < 5; $i++) {
             $user = $users->random();
 
             Book::factory()->create([
