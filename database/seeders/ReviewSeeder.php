@@ -19,6 +19,11 @@ class ReviewSeeder extends Seeder
         $users = User::all();
         $books = Book::all();
 
+        if ($books->isEmpty()) {
+            $this->command->warn('No books found! Reviews not seeded.');
+            return;
+        }
+
         foreach ($users as $user) {
             $booksToReview = $books->random(rand(1,3));
 
