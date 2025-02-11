@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware("auth:sanctum")->except(['index', 'show']);
+    }
+
+
     public function index()
     {
         return BookResource::collection(Book::with('reviews')->get());
