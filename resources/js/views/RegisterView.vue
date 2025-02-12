@@ -24,14 +24,7 @@ const handleRegister = async () => {
   }
 };
 
-onMounted(async () => {
-  try {
-    const response = await axios.get("/api/user");
-    if (response.data) router.push("/");
-  } catch (error) {
-    console.log("Not logged in");
-  }
-});
+
 </script>
 
 <template>

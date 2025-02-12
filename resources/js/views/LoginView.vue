@@ -1,6 +1,7 @@
 <script setup>
-import {ref, onMounted} from 'vue';
+import {ref} from 'vue';
 import { useRouter } from "vue-router";
+import { authStore } from '@/store';
 
 const router = useRouter();
 const email = ref("")
@@ -9,27 +10,14 @@ const error = ref("")
 
 const handleLogIn = async () => {
   try {
-    const response = await axios.post("/api/login", {
+    await authStore.login({
       email: email.value,
       password: password.value,
-    });
-
-    localStorage.setItem("token", response.data.token);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-    router.push("/")
+    })
   } catch (error) {
     error.value = "Incorrect credentials."
   }
 };
-
-onMounted(async () => {
-    try {
-    const response = await axios.get("/api/user");
-    if (response.data) router.push("/")
-  } catch (error) {
-    console.log("Not logged in");
-  }
-})
 
 </script>
 

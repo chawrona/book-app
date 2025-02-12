@@ -1,21 +1,6 @@
 <script setup>
-    import {onMounted} from 'vue';
     import {RouterView, useRouter} from 'vue-router';
-
-
-
-
     const router = useRouter();
-
-    const logout = async () => {
-        try {
-            await axios.post('/api/logout');
-            router.push('/login');
-        } catch (error) {
-            console.error('Logout failed', error);
-        }
-        };
-
 </script>
 
 
