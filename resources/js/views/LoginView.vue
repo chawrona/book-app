@@ -37,7 +37,7 @@ onMounted(async () => {
     <h2>Log in</h2>
     <h3 v-if="error">{{ error }}</h3>
     <form @submit.prevent="handleLogIn">
-        <input type="email" required v-model="email" placeholder="e-mail">
+        <input type="email"  required v-model="email" placeholder="e-mail">
         <input type="password" required v-model="password" placeholder="password">
         <input type="submit">
     </form>
