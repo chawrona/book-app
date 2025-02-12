@@ -53,6 +53,7 @@ onMounted(async () => {
 
         <ul v-if="book.reviews">
             <li v-for="review in filteredReviews" :key="review.id">
+                <p>{{ review.username }}</p>
                 <p>{{ review.review }}</p>
                 <p>Rating: {{ review.rate }} / 5</p>
                 <RouterLink v-if="review.is_owner" :to="`/book/${book.id}/review/${review.id}`">Edit review</RouterLink>
