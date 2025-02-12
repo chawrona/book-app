@@ -19,8 +19,7 @@ const filteredReviews = computed(() => {
 
 onMounted(async () => {
     try {
-        let response = await axios.get("/api/user");
-        response = await axios.get(`/api/books/${route.params.id}`);
+        const response = await axios.get(`/api/books/${route.params.id}`);
         book.value = response.data.data;
         console.log(book.value.reviews);
 

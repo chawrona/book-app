@@ -44,8 +44,7 @@ const sortBooks = () => {
 
 onMounted(async () => {
     try {
-        let response = await axios.get("/api/user");
-        response = await axios.get("/api/books");
+        const response = await axios.get("/api/books");
         books.value = response.data.data;
     } catch (error) {
         router.push("/login");

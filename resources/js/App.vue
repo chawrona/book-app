@@ -1,9 +1,7 @@
 <script setup>
     import {RouterView, useRouter} from 'vue-router';
-    const router = useRouter();
+    import { authStore } from './store/auth';
 </script>
-
-
 
 <template>
     <div class="app-container">
@@ -12,7 +10,7 @@
         <RouterLink :to="`/book`">Add Book</RouterLink><br>
         <RouterLink :to="`/login`">Login</RouterLink><br>
         <RouterLink :to="`/register`">Register</RouterLink><br>
-        <button @click="logout">Logout</button>
+        <button @click="authStore.logout">Logout</button>
         <RouterView />
     </div>
 </template>

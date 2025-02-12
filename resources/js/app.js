@@ -8,8 +8,9 @@ import router from "./router/app";
 
 const app = createApp(App)
 
-app.use(router);
+authStore.checkAuth().then(() => {
+    app.use(router);
+    app.mount("#app");
+})
 
-app.mount("#app");
 
-authStore.checkAuth();

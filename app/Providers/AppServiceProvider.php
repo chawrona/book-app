@@ -9,17 +9,12 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         $bookPolicy = fn($user, Book $book) => $user->id === $book->user_id;
@@ -29,6 +24,5 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('delete-book', $bookPolicy);
         Gate::define('update-review', $reviewPolicy);
         Gate::define('delete-review', $reviewPolicy);
-
     }
 }

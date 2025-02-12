@@ -7,6 +7,8 @@ const author = ref('');
 const release_year = ref('');
 const description = ref('');
 
+const router = useRouter();
+
 const handleSubmit = async () => {
   try {
     await axios.post('/api/books', {
@@ -21,15 +23,6 @@ const handleSubmit = async () => {
     console.error('Error adding book:', error);
   }
 };
-
-const router = useRouter();
-onMounted(async () => {
-    try {
-        await axios.get("/api/user");
-    } catch (error) {
-        router.push("/login");
-    }
-})
 
 </script>
 

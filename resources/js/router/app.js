@@ -1,15 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import { authStore } from '../store/auth';
 
 import HomeView from '../views/HomeView.vue';
-import BookView from '../views/BookView.vue';
+import NotFoundView from '../views/NotFoundView.vue';
+// Books
+import BookView from '../views/BookView.vue'
 import AddBookView from '../views/AddBookView.vue';
+// Reviews
 import ReviewView from '../views/ReviewView.vue';
 import AddReview from '../views/AddReview.vue';
+// Auth
 import LoginView from '../views/LoginView.vue';
-import NotFoundView from '../views/NotFoundView.vue';
 import RegisterView from '../views/RegisterView.vue';
+
+
 
 const router = createRouter({
     history: createWebHistory("/"),
@@ -64,11 +68,10 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
     if (to.meta.requiresAuth && !authStore.isAuthenticated) next('/login');
     else if (to.meta.requiresNotAuth && authStore.isAuthenticated) next('/');
     else next();
  });
-
 
 export default router
