@@ -1,18 +1,25 @@
 <script setup>
-    import {RouterView, useRouter} from 'vue-router';
-    import { authStore } from './store/auth';
+    import {RouterView} from 'vue-router';
+    import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-    <div class="app-container">
-        <h1>Book App</h1>
-        <RouterLink :to="`/`">Home Page</RouterLink><br>
-        <RouterLink :to="`/book`">Add Book</RouterLink><br>
-        <RouterLink :to="`/login`">Login</RouterLink><br>
-        <RouterLink :to="`/register`">Register</RouterLink><br>
-        <button @click="authStore.logout">Logout</button>
-        <RouterView />
+    <div>
+        <Navbar />
+        <div :class="$style.container">
+            <RouterView />
+        </div>
     </div>
 </template>
 
+
+<style module>
+    .container {
+        width: 100%;
+        max-width: 800px;
+        margin-inline: auto;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+</style>
 

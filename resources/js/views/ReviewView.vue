@@ -48,25 +48,70 @@ const deleteReview = async () => {
   }
 };
 
+const goBack = () => router.go(-1);
+
 onMounted(getReview);
 </script>
 
 <template>
-
-
     <p v-if="error" style="color: red;">{{ error }}</p>
     <form @submit.prevent="updateReview">
-        <textarea v-model="reviewContent" placeholder="Write your review here" required></textarea>
-        <p>Select a rating:</p>
 
-        <div v-for="n in 5" :key="n">
-          <input type="radio" :id="'rate' + n" :value="n" v-model="rate" required />
-          <label :for="'rate' + n">{{ n }}</label>
+        <h2>Edit Review</h2>
+        <h4>Select rating</h4>
+
+        <div class="review-edit-wrap">
+            <div v-for="n in 5" :key="n" class="review-edit-rating">
+                <label :for="'rate' + n">{{ n }}</label>
+                <input type="radio" :id="'rate' + n" :value="n" v-model="rate" required />
+            </div>
         </div>
 
-      <button type="submit">Update Review</button>
+        <h4>Review</h4>
+        <textarea v-model="reviewContent" placeholder="Write your review here" required class="review-textarea"></textarea>
+
+        <button type="submit" class="update-review">Update Review</button>
     </form>
 
-    <button @click="deleteReview" style="margin-top: 1rem;">Delete Review</button>
 
+    <button @click="deleteReview" style="margin-top: 1rem;" class="delete-review">Delete Review</button>
+    <button @click="goBack" class="go-back">Back</button>
 </template>
+
+<style scoped>
+    .review-edit-wrap {
+        display: flex;
+        font-size: 1.2rem;
+        gap: 2rem;
+
+    }
+
+    .review-edit-rating {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 1.3rem;
+        padding: 1rem;
+        label {
+            cursor: pointer;
+        }
+    }
+
+    .review-textarea {
+        display: block;
+        width: 100%;
+        max-width: 450px;
+        min-height: 7rem;
+        margin-top: 0.75rem;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+    }
+
+    .update-review, .delete-review, .go-back{
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        padding: 0.35rem 0.75rem;
+        width: 12rem;
+        display: block;
+    }
+
+</style>

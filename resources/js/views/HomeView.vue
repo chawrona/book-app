@@ -1,12 +1,7 @@
 setup
 <script setup>
 import {ref, onMounted} from 'vue';
-import { useRoute } from 'vue-router';
 import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-const route = useRoute();
 
 const books = ref([])
 
@@ -15,7 +10,6 @@ const calculateAvg = (reviews) => {
   let total = reviews.reduce((sum, review) => sum + review.rate, 0);
   return (total / reviews.length).toFixed(1);
 };
-
 
 const selectedSort = ref('');
 
@@ -47,43 +41,76 @@ onMounted(async () => {
         const response = await axios.get("/api/books");
         books.value = response.data.data;
     } catch (error) {
-        router.push("/login");
+        console.error(error)
     }
 })
 
 </script>
 
 <template>
-    <h2>Books</h2>
+    <h2 class="subtitle">Books</h2>
 
-    <select v-model="selectedSort" @change="sortBooks">
-  <option value="">Select sorting option</option>
-  <option value="title">Sort by Title</option>
-  <option value="author">Sort by Author</option>
-  <option value="release_year">Sort by Year</option>
-  <option value="avg">Sort by Average Rating</option>
-</select>
+    <select v-model="selectedSort" @change="sortBooks" class="books-filter">
+        <option value="">Select sorting option</option>
+        <option value="title">Sort by Title</option>
+        <option value="author">Sort by Author</option>
+        <option value="release_year">Sort by Year</option>
+        <option value="avg">Sort by Average Rating</option>
+    </select>
 
-    <ul>
-        <li v-for="book in books" :key="book.id">
-            <span>{{ book.title }}</span>
-            <span>{{ book.author }}</span>
-            <span>{{ book.release_year }}</span>
-            <span>Avg: {{ calculateAvg(book.reviews) }}</span>
-            <RouterLink :to="`/book/${book.id}`">
+    <table class="books-table">
+        <tr v-for="book in books" :key="book.id">
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.release_year }}</td>
+            <td>Avg: {{ calculateAvg(book.reviews) }}</td>
+
+            <RouterLink :to="`/book/${book.id}`" class="book">
                 Check
             </RouterLink>
-        </li>
-    </ul>
+        </tr>
+    </table>
 </template>
 
 
 <style scoped>
-    li {
-        display: flex;
-        flex-direction: row;
+   
+    .books-filter {
+        padding: 0.5em 0.5em;
+        font-size: 1.2rem;
+    }
 
-        gap: 1rem;
+    .books-table {
+        margin-top: 1rem;
+        width: 100%;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.427);
+        border-collapse: collapse;
+
+        tr {
+
+            background-color: #ff9e00;
+        }
+
+        tr:nth-last-of-type(2n) {
+            background-color: #fff;
+        }
+
+        td {
+            font-size: 1.1rem;
+            padding: 1rem 1rem;
+        }
+    }
+
+    .book {
+        display: block;
+        margin-left: auto;
+        font-size: 1.1rem;
+        padding: 1rem 1rem;
+        font-weight: bold;
+
+        &:hover {
+            color: #9d4edd;
+        }
     }
 
 </style>
